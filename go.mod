@@ -42,3 +42,6 @@ require (
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/mgtv-tech/jetcache-go/ => github.com/ys-d/localcache-go v0.0.0-20241110110009-9e8886f264e2
+
