@@ -1,3 +1,4 @@
+replace github.com/mgtv-tech/jetcache-go => localcache-go
 
 go 1.20
 
