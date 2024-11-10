@@ -1,4 +1,4 @@
-replace github.com/mgtv-tech/jetcache-go => localcache-go
+module github.com/ys-d/localcache-go
 
 go 1.20
 
