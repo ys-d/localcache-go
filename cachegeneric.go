@@ -25,7 +25,7 @@ func NewT[K constraints.Ordered, V any](cache Cache) *T[K, V] {
 // Set sets the value `v` associated with the given `key` and `id` in the cache.
 // The expiration time of the cached value is determined by the cache configuration.
 func (w *T[K, V]) Set(ctx context.Context, key string, id K, v V) error {
-	combKey := fmt.Sprintf("%s:%v", key, id)
+	combKey := fmt.Sprintf("%s%v", key, id)
 	return w.Cache.Set(ctx, combKey, Value(v))
 }
 
@@ -39,7 +39,7 @@ func (w *T[K, V]) Set(ctx context.Context, key string, id K, v V) error {
 // combination, even under concurrent access.
 func (w *T[K, V]) Get(ctx context.Context, key string, id K, fn func(context.Context, K) (V, error)) (V, error) {
 	var varT V
-	combKey := fmt.Sprintf("%s:%v", key, id)
+	combKey := fmt.Sprintf("%s%v", key, id)
 	err := w.Once(ctx, combKey, Value(&varT), Do(func(ctx context.Context) (any, error) {
 		return fn(ctx, id)
 	}))
@@ -83,7 +83,7 @@ func (w *T[K, V]) MGet(ctx context.Context, key string, ids []K, fn func(context
 		return missIds[i] < missIds[j]
 	})
 
-	combKey := fmt.Sprintf("%s:%v", key, missIds)
+	combKey := fmt.Sprintf("%s%v", key, missIds)
 	v, err, _ := c.group.Do(combKey, func() (interface{}, error) {
 		var ret map[K]V
 		if c.local != nil {
