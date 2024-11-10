@@ -1,4 +1,3 @@
-module github.com/mgtv-tech/jetcache-go
 
 go 1.20
 
